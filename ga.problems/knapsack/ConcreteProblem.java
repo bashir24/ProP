@@ -20,7 +20,7 @@ public class ConcreteProblem {
 
         List<Solution> result = GeneticAlgorithm
                 .solve(problem)
-                .withPopulationOfSize(4)
+                .withPopulationOfSize(4) //4 Lösungen pro Generation.
                 .evolvingSolutionsWith(new KnapsackMutation())
                 .evaluatingSolutionsBy(new KnapsackFitnessEvaluator())
                 .performingSelectionWith(new TournamentSelection())

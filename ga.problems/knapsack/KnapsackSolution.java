@@ -19,12 +19,13 @@ public class KnapsackSolution extends Solution {
     public int getValue() { return value; }
     public List<Item> getItems() { return chosenItems; }
 
-
+//Erstellt eine neue Lösung für ein gegebenes KnapsackProblem.
     public KnapsackSolution(KnapsackProblem problem) {
         super(problem);
     }
 
-    // Copy-Konstruktor
+//Erstellt eine exakte Kopie einer bestehenden Lösung.
+//Zweck: Mutationen sollen die Original-Lösung nicht verändern, sondern auf einer Kopie arbeiten.
     public KnapsackSolution(KnapsackSolution other) {
         super(other);
         this.chosenItems = new ArrayList<>(other.chosenItems);

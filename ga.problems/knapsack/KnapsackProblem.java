@@ -17,9 +17,12 @@ public class KnapsackProblem implements Problem {
         this.capacity = capacity;
         this.items = items;
     }
-
     public int getCapacity() { return capacity; }
     public List<Item> getItems() { return items; }
+
+
+
+//nur einmal zu Beginn aufgerufen, um die Startpopulation zu erstellen.
 
     @Override
     public Solution createNewSolution() throws NoSolutionException {
