@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ga.framework">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PP/ga.framework.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -53,11 +53,17 @@ public class GeneticAlgorithm {
     }
 
     public class SelectionSetter {
+        public SelectionSetter survivingWith(SurvivalOperator surv) {
+            survival = surv;
+            return this;
+        }
+
         public StopSetter stoppingAtEvolution(int maxIter) {
             maxIterations = maxIter;
             return new StopSetter();
         }
     }
+
 
     public class StopSetter {
         public List<Solution> runOptimization() throws Exception {
@@ -70,7 +76,22 @@ public class GeneticAlgorithm {
 
     // ----- Kernalgorithmus -----
     private List<Solution> runOptimization()  {
-        Random rand = new Random();
+
+            if (problem == null) {
+                throw new IllegalStateException("Problem fehlt!");
+            }
+            if (evaluator == null) {
+                throw new IllegalStateException("FitnessEvaluator fehlt!");
+            }
+            if (selection == null) {
+                throw new IllegalStateException("SelectionOperator fehlt!");
+            }
+            if (survival == null) {
+                throw new IllegalStateException("SurvivalOperator fehlt!");
+            }
+
+
+                Random rand = new Random();
         try {
         // Startpopulation
         List<Solution> population = new ArrayList<>();
@@ -115,4 +136,26 @@ public class GeneticAlgorithm {
 
     //===================1.1 Grundimplementierung==============================
 
+
+
+
+    /* Startpopulation erzeugen
+
+1-Fitness berechnen
+
+2-Iteration starten:
+
+3-Eltern auswählen
+
+4-Kinder erzeugen
+
+5-Fitness der Kinder berechnen
+
+6-Kandidatenliste = Eltern + Kinder
+
+7-Neue Population wählen (TopK)
+
+8-Wiederholen, bis maxIterations erreicht
+
+9-Beste Population zurückgeben */
 }
