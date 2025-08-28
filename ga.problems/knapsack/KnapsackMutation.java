@@ -13,6 +13,11 @@ public class KnapsackMutation implements EvolutionaryOperator {
 
     @Override
     public Solution evolve(Solution parent) throws EvolutionException {
+        // Erstellt eine Kopie der ursprünglichen Lösung (parent).
+        //Original bleibt unverändert → wichtig für GA.
+        //Holt das Problemobjekt, um Kapazität und alle Items zu kennen.
+
+
         KnapsackSolution copy = new KnapsackSolution((KnapsackSolution) parent);
         KnapsackProblem problem = (KnapsackProblem) copy.getProblem();
 
@@ -52,3 +57,9 @@ public class KnapsackMutation implements EvolutionaryOperator {
         return copy;
     }
 }
+
+//======wichtig==damit nicht manschmal biede ausgeführt wird
+//Runnable ist ein Interface in Java, das eine Methode run() hat:
+//Wir erstellen eine Liste von Aktionen, die wir später ausführen wollen.
+//Jede Aktion wird als Runnable gespeichert, z. B.:
+//Das () -> { ... } ist ein Lambda, das Runnable implementiert.

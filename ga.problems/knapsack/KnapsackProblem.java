@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//==========2.1 Problem und Lösung ============
 public class KnapsackProblem implements Problem {
     private int capacity;
     private List<Item> items;
@@ -16,6 +17,9 @@ public class KnapsackProblem implements Problem {
         this.capacity = capacity;
         this.items = items;
     }
+
+    public int getCapacity() { return capacity; }
+    public List<Item> getItems() { return items; }
 
     @Override
     public Solution createNewSolution() throws NoSolutionException {
@@ -38,6 +42,5 @@ public class KnapsackProblem implements Problem {
         return sol;
     }
 
-    public int getCapacity() { return capacity; }
-    public List<Item> getItems() { return items; }
+
 }

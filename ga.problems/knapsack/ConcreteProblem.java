@@ -24,7 +24,7 @@ public class ConcreteProblem {
                 .evolvingSolutionsWith(new KnapsackMutation())
                 .evaluatingSolutionsBy(new KnapsackFitnessEvaluator())
                 .performingSelectionWith(new TournamentSelection())
-                .survivingWith(new TopKSurvival(2))   // ✅ neu und wichtig!
+                .survivingWith(new TopKSurvival(2))
                 .stoppingAtEvolution(10)
                 .runOptimization();
 

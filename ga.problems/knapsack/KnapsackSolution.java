@@ -6,10 +6,19 @@ import ga.framework.model.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
+//==========2.1 Problem und Lösung ============
+
 public class KnapsackSolution extends Solution {
     private List<Item> chosenItems = new ArrayList<>();
     private int weight = 0;
     private int value = 0;
+
+
+
+    public int getWeight() { return weight; }
+    public int getValue() { return value; }
+    public List<Item> getItems() { return chosenItems; }
+
 
     public KnapsackSolution(KnapsackProblem problem) {
         super(problem);
@@ -35,7 +44,5 @@ public class KnapsackSolution extends Solution {
         value -= item.getValue();
     }
 
-    public int getWeight() { return weight; }
-    public int getValue() { return value; }
-    public List<Item> getItems() { return chosenItems; }
+
 }
