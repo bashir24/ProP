@@ -1,0 +1,7 @@
+
+R
+java:S1117!"7Rename "key" which hides the field declared at line 13.(¹½‘üüÿÿÿÿ
+S
+java:S1858>"="get" returns a string, there's no need to call "toString()".(ŠÛ¤„
+W
+java:S6201J"AReplace this instanceof check and cast with 'instanceof Record r'(ß«Áå

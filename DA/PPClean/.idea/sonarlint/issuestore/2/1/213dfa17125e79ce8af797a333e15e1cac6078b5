@@ -1,0 +1,12 @@
+
+q
+java:S1488$"[Immediately return this expression instead of assigning it to the temporary variable "res".(”ö¾ì
+i	java:S116"TRename this field "JACCARD_N" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñÒÉ½
+7
+java:S1170"!Make this final field static too.(ñÒÉ½
+G
+java:S1068",Remove this unused "policies" private field.(ˆ”ÓÁüÿÿÿÿ
+F
+java:S1068"+Remove this unused "jaccard" private field.(×¤ï¤ùÿÿÿÿ
+J
+java:S1068"/Remove this unused "levenshtein" private field.(·ˆîøÿÿÿÿ

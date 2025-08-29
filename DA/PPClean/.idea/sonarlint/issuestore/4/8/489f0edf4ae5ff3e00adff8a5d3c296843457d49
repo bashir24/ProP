@@ -1,0 +1,42 @@
+
+v
+java:S1104"[Make PATH_INPUT_DATA a static final constant or non-public and provide accessors if needed.(¾¶à«ıÿÿÿÿ
+w
+java:S1104"\Make PATH_OUTPUT_DATA a static final constant or non-public and provide accessors if needed.(´‘·ˆùÿÿÿÿ
+w
+java:S1104	"aMake PATH_DUPLICATES_FOUND a static final constant or non-public and provide accessors if needed.(¶³É
+w
+java:S1104
+"aMake PATH_DUPLICATES_TRUTH a static final constant or non-public and provide accessors if needed.(Š¹‡
+p
+java:S1104"ZMake DATA_SEPARATOR a static final constant or non-public and provide accessors if needed.(—şš
+n
+java:S1104"XMake CONTROL_CHAR a static final constant or non-public and provide accessors if needed.(×øÁ†
+P
+java:S1444"5Make this "public static PATH_INPUT_DATA" field final(¾¶à«ıÿÿÿÿ
+Q
+java:S1444"6Make this "public static PATH_OUTPUT_DATA" field final(´‘·ˆùÿÿÿÿ
+Q
+java:S1444	";Make this "public static PATH_DUPLICATES_FOUND" field final(¶³É
+Q
+java:S1444
+";Make this "public static PATH_DUPLICATES_TRUTH" field final(Š¹‡
+J
+java:S1444"4Make this "public static DATA_SEPARATOR" field final(—şš
+H
+java:S1444"2Make this "public static CONTROL_CHAR" field final(×øÁ†
+u
+java:S3008"ZRename this field "PATH_INPUT_DATA" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾¶à«ıÿÿÿÿ
+v
+java:S3008"[Rename this field "PATH_OUTPUT_DATA" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´‘·ˆùÿÿÿÿ
+v
+java:S3008	"`Rename this field "PATH_DUPLICATES_FOUND" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶³É
+v
+java:S3008
+"`Rename this field "PATH_DUPLICATES_TRUTH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š¹‡
+o
+java:S3008"YRename this field "DATA_SEPARATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—şš
+m
+java:S3008"WRename this field "CONTROL_CHAR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×øÁ†
+P
+java:S1118":Add a private constructor to hide the implicit public one.(œ±íé

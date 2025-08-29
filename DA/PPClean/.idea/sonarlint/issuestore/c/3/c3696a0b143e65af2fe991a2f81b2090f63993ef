@@ -1,0 +1,13 @@
+
+”	java:S116"TRename this field "HASH_BASE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬‹ˆüÿÿÿÿJ$51585103-2e9f-44a6-a7d4-c97e00501faa
+	java:S116"URename this field "HASH_PRIME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤û±J$51176105-b146-4740-9ede-51ad9ae5f0a3
+	java:S116"NRename this field "LSH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”Ù¾óıÿÿÿÿJ$338bddb0-1554-44b6-9eb5-edb4bd750221
+m
+java:S11724",Remove this unused method parameter "table".(®ã£¢üÿÿÿÿJ$9775f9f1-9e6c-40b8-a70f-e7b22a174838
+m
+java:S1172C",Remove this unused method parameter "table".(ÚËÜäÿÿÿÿÿJ$2c599b40-bb22-49a7-99b5-ab01681c0def
+k	java:S106t"+Replace this use of System.out by a logger.(–µîûÿÿÿÿJ$6a6518a1-f3e8-4a73-92fe-d55b242c352f
+S
+java:S1128"1Remove this unused import 'de.clean.data.Record'.(ıíºıÿÿÿÿ8Ã«Ï×3
+j
+java:S1144K")Remove this unused private "hash" method.(³åÛúÿÿÿÿJ$fc3e487d-34a7-42e2-a7bf-073265aec8a5
