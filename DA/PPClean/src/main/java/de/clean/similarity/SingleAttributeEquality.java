@@ -35,3 +35,10 @@ public class SingleAttributeEquality implements RecordSimilarity {
 
     }
 }
+
+
+
+
+/* Prüft, ob v1 und v2 genau gleich sind
+Wenn gleich → 1.0 (maximale Ähnlichkeit)
+Wenn ungleich → 0.0 (keine Ähnlichkeit) */

@@ -53,3 +53,18 @@ public class NaiveDetection implements DuplicateDetection {
     }
 
 }
+
+
+
+
+// Threshold = Mindestwert, ab dem zwei Records als gleich / Duplikat betrachtet werden.
+
+/*
+Naiv = alle Records miteinander vergleichen
+
+Vergleich über ein beliebiges Ähnlichkeitsmaß (recSim)
+
+Duplikat, wenn Ähnlichkeit ≥ Threshold
+
+Performance: sehr einfach, aber bei großen Tabellen langsam
+ */
