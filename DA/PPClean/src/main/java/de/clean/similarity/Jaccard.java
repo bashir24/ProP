@@ -60,3 +60,13 @@ public class Jaccard implements StringSimilarity {
     }
 
 }
+
+
+/*Aufgabe 2: Jaccard Similarity
+
+Strings in n-Gramme zerlegen
+Ähnlichkeit:
+(𝐴 ∩ 𝐵)/(𝐴∪𝐵)
+Gut für: längere Strings, Abkürzungen, Schreibvarianten
+z.B Adresse
+ */

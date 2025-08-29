@@ -72,3 +72,11 @@ public class SortedNeighborhoodDetection implements DuplicateDetection {
     }
 
 }
+
+
+/*  * Aufgabe 5: Sorted-Neighborhood
+ * - Ziel: Vergleiche reduzieren
+ * - Schritte:
+ *   1. Key für jeden Record erstellen (einige Zeichen der Attribute)
+ *   2. Tabelle nach Key sortieren
+ *   3. Fenster über Tabelle schieben → nur Records im Fenster vergleichen */

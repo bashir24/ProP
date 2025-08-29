@@ -57,3 +57,18 @@ public class Levenshtein implements StringSimilarity {
     }
 
 }
+
+
+
+
+
+/* Aufgabe 3: Levenshtein Similarity
+ * - Misst minimale Änderungen (Einfügen, Löschen, Ersetzen)
+ * - Similarity = 1 - (Distanz / max Länge)
+ * - Gut für kurze Strings, Tippfehler */
+
+
+//Wann benutzt man welches Maß?
+//Maß	Typischer Einsatz	Warum
+//Levenshtein	Kurze Strings, z. B. Namen, Stadt	Erfasst Tippfehler, Buchstaben vertauscht oder ersetzt
+//Jaccard	Längere Strings, z. B. Adressen, Beschreibungen	Erfasst Unterschiede in Substrings, Abkürzungen, zusätzliche Wörter

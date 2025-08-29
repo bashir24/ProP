@@ -70,3 +70,10 @@ public class Hybrid implements RecordSimilarity {
 
 }
 
+
+
+/*   Aufgabe 4: Hybride Record-Ähnlichkeit
+ * - Verschiedene Ähnlichkeitsmaße pro Attribut kombinieren
+ * - Policy: L = Levenshtein, J = Jaccard, null = ignorieren
+ * - Durchschnitt aller verglichenen Attribute = Record-Similarity
+ * - Threshold entscheidet, ob Record-Paar Duplikat ist */

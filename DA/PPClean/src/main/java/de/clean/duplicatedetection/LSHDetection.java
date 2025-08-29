@@ -201,3 +201,64 @@ public class LSHDetection implements DuplicateDetection {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * ===========================
+ * Aufgabe 6: Locality Sensitive Hashing (LSH)
+ * ===========================
+ *
+ * Ziel:
+ * - Alternative zum Blocking (wie Sorted-Neighborhood)
+ * - Ähnliche Records sollen den gleichen Hashwert bekommen → gleiche Buckets
+ * - Nur Records im gleichen Hash-Bucket werden verglichen
+ *
+ * Schritte:
+ * 1. Tokenization (calculateTokens)
+ *    - Strings in gleichgroße Substrings (tokens) zerlegen, ähnlich wie Jaccard
+ *    - tokenUniverse: alle eindeutigen Tokens aus der Tabelle
+ *    - tokenMatrix[i][j] = true, wenn i-ter Token im j-ten Record vorkommt
+ *
+ * 2. MinHashing (calculateMinHashes)
+ *    - Signaturmatrix erstellen: numMinHashs Reihen × numRecords Spalten
+ *    - Für jede Reihe: minimalen Reihenindex eines vorkommenden Tokens pro Record bestimmen
+ *    - Weitere Reihen: TokenMatrix permutieren (Helper.shuffleMatrix)
+ *    - Ergebnis: signatureMatrix → Signaturen für jeden Record
+ *
+ * 3. LSH (calculateHashBuckets)
+ *    - Signaturen in numBands gleichgroße Bands zerlegen
+ *    - Jede Band → eigene Hashtabelle: Hashwert → Liste von Record-IDs (Hash-Bucket)
+ *    - Records, die mindestens in einem Band denselben Hash haben, werden Duplikatkandidaten
+ *
+ * 4. detect-Methode
+ *    - Über alle Hashtabellen iterieren
+ *    - Innerhalb eines Buckets alle Records miteinander vergleichen (recSim)
+ *    - numComparisons erhöhen bei jedem Vergleich
+ *
+ * Vorteile:
+ * - Reduziert drastisch die Anzahl der Vergleiche
+ * - Ähnliche Records werden zuverlässig zusammengebracht
+ *
+ * Hinweis:
+ * - Reihenfolge der Tokens in tokenMatrix wichtig, nicht original String-Reihenfolge
+ * - LSH ist besonders effizient bei großen Tabellen
+ */
+
+//SN: räumlich nah in der sortierten Tabelle → einfach, schnell, aber fehleranfällig
+//LSH: Hash-Buckets → sehr ähnlich = gleiche Buckets, robust, ideal für große und unstrukturierte Daten
