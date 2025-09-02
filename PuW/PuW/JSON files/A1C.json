@@ -1,0 +1,28 @@
+{
+  "shapeType": "CIRCLE",
+  "color": "red",
+  "fillColor": "yellow",
+  "posX": 10,
+  "posY": 20,
+  "lineWidth": 2,
+  "scaleX": 1,
+  "scaleY": 1,
+  "rotation": 45,
+  "tags": ["favorite", "bright"],
+  "innerShape": {
+    "shapeType": "TRIANGLE",
+    "color": "blue",
+    "fillColor": "green",
+    "posX": 5,
+    "posY": 5,
+    "lineWidth": 1,
+    "scaleX": 2,
+    "scaleY": 2,
+    "rotation": 90,
+    "tags": ["small", "nested"]
+  }
+}
+//Für die aktuelle Implementierung würde dies Probleme bereiten,
+//weil der Parser die JSON-Datei nach Kommas splittet. Dadurch können verschachtelte
+//Objekte wie innerShape oder Arrays wie tags nicht korrekt eingelesen werden. Ein rekursiver
+//Parser oder die Verwendung einer JSON-Bibliothek wäre nötig, um dies korrekt zu verarbeiten.
