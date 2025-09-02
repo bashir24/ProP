@@ -23,6 +23,8 @@ public class Levenshtein implements StringSimilarity {
         // 1. Matrix D erstellen (m+1) x (n+1)
         int[][] D = new int[m + 1][n + 1];
 
+
+
         // 2. Basisfälle füllen
         for (int i = 0; i <= m; i++) {
             D[i][0] = i; // Löschen von x
@@ -72,3 +74,23 @@ public class Levenshtein implements StringSimilarity {
 //Maß	Typischer Einsatz	Warum
 //Levenshtein	Kurze Strings, z. B. Namen, Stadt	Erfasst Tippfehler, Buchstaben vertauscht oder ersetzt
 //Jaccard	Längere Strings, z. B. Adressen, Beschreibungen	Erfasst Unterschiede in Substrings, Abkürzungen, zusätzliche Wörter
+
+
+//Erste Zeile = Anzahl der Einfügungen, um leeren String zu y zu machen
+//Erste Spalte = Anzahl der Löschungen, um x zu leeren String zu machen
+
+
+/* Richtung	Operation
+Nach unten	Löschen von x
+Nach rechts	Einfügen in x
+Diagonal	Ersetzen / Übereinstimmung
+
+
+ Merksatz:
+
+Source = Zeilen (x)
+Target = Spalten (y)
+Bewegung: nach unten = löschen,
+nach rechts = einfügen,
+ diagonal = ersetzen oder 0*/
+

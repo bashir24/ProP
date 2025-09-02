@@ -31,6 +31,12 @@ public class NaiveDetection implements DuplicateDetection {
     @Override
     public Set<Duplicate> detect(Table table, RecordSimilarity recSim) {
         List<Record> records = table.getData();
+
+
+
+        /* Das Set enthält jedes Duplikat-Paar nur einmal, egal in welcher Reihenfolge die Records übergeben werden.
+           Dadurch keine doppelten Einträge wie (r1,r2) und (r2,r1) */
+
         Set<Duplicate> duplicates = new HashSet<>();
         int numComparisons = 0;
 
@@ -38,6 +44,8 @@ public class NaiveDetection implements DuplicateDetection {
         for (int i = 0; i < records.size(); i++) {
             for (int j = i + 1; j < records.size(); j++) {
                 numComparisons++;
+
+                // Hier wird nur das eine Attribut verglichen, das im Konstruktor angegeben wurde (attributeIndex).
                 double sim = recSim.compare(records.get(i), records.get(j));
 
                 if (sim >= threshold) {
@@ -57,6 +65,9 @@ public class NaiveDetection implements DuplicateDetection {
 
 
 
+
+
+
 // Threshold = Mindestwert, ab dem zwei Records als gleich / Duplikat betrachtet werden.
 
 /*
@@ -68,3 +79,8 @@ Duplikat, wenn Ähnlichkeit ≥ Threshold
 
 Performance: sehr einfach, aber bei großen Tabellen langsam
  */
+
+
+// ======== power of HashSet =========
+// Im Set werden die Duplicate-Objekte gespeichert, nicht die einzelnen Records.
+//Jedes Duplicate enthält zwei Records wie
