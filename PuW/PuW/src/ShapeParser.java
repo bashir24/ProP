@@ -2,16 +2,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ShapeParser{
+public class ShapeParser {
 
     public static Shape parseFromJson(String json) {
-        json = json.replaceAll("[{}\"]", ""); // { } und " entfernen
+        // Entferne { }, " → einfacher zu splitten
+        json = json.replaceAll("[{}\"]", "");
         String[] lines = json.split(",");
 
+        // Ergebnisvariablen
         Shape.ShapeType shapeType = null;
         String color = "";
+        String fillColor = "";
         int posX = 0;
         int posY = 0;
+        int lineWidth = 0;
+        int scaleX = 0;
+        int scaleY = 0;
+        int rotation = 0;
         List<String> tags = new ArrayList<>();
 
         for (String line : lines) {
@@ -28,14 +35,28 @@ public class ShapeParser{
                 case "color":
                     color = value;
                     break;
+                case "fillColor":
+                    fillColor = value;
+                    break;
                 case "posX":
                     posX = Integer.parseInt(value);
                     break;
                 case "posY":
                     posY = Integer.parseInt(value);
                     break;
+                case "lineWidth":
+                    lineWidth = Integer.parseInt(value);
+                    break;
+                case "scaleX":
+                    scaleX = Integer.parseInt(value);
+                    break;
+                case "scaleY":
+                    scaleY = Integer.parseInt(value);
+                    break;
+                case "rotation":
+                    rotation = Integer.parseInt(value);
+                    break;
                 case "tags":
-                    // Array: [tag1, tag2]
                     value = value.replace("[", "").replace("]", "").trim();
                     if (!value.isEmpty()) {
                         tags = new ArrayList<>(Arrays.asList(value.split("\\s*,\\s*")));
@@ -44,9 +65,7 @@ public class ShapeParser{
             }
         }
 
-        return new Shape(shapeType, color, posX, posY, tags);
+        // Neues Shape-Objekt mit allen Eigenschaften erstellen
+        return new Shape(shapeType, color, fillColor, posX, posY, lineWidth, scaleX, scaleY, rotation, tags);
     }
 }
-
-
-// Die Methode trim() entfernt alle führenden und nachgestellten Leerzeichen (Spaces, Tabs, Zeilenumbrüche) aus einem String.
