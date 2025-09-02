@@ -29,33 +29,59 @@ public class ShapeParser {
             String value = kv[1].trim();
 
             switch (key) {
+                // ShapeType: alte und neue Bezeichnung
                 case "shapeType":
+                case "type":
                     shapeType = Shape.ShapeType.valueOf(value);
                     break;
+
+                // Farbe: alte und neue Bezeichnung
                 case "color":
+                case "lineColor":
                     color = value;
                     break;
+
+                // Füllfarbe bleibt gleich
                 case "fillColor":
                     fillColor = value;
                     break;
+
+                // Position X: alte und neue Bezeichnung
                 case "posX":
+                case "x":
                     posX = Integer.parseInt(value);
                     break;
+
+                // Position Y: alte und neue Bezeichnung
                 case "posY":
+                case "y":
                     posY = Integer.parseInt(value);
                     break;
+
+                // Linienbreite: alte und neue Bezeichnung
                 case "lineWidth":
+                case "lw":
                     lineWidth = Integer.parseInt(value);
                     break;
+
+                // Skalierung X: alte und neue Bezeichnung
                 case "scaleX":
+                case "scaleHorizontal":
                     scaleX = Integer.parseInt(value);
                     break;
+
+                // Skalierung Y: alte und neue Bezeichnung
                 case "scaleY":
+                case "scaleVertical":
                     scaleY = Integer.parseInt(value);
                     break;
+
+                // Rotation
                 case "rotation":
                     rotation = Integer.parseInt(value);
                     break;
+
+                // Tags: in beiden Formaten gleich
                 case "tags":
                     value = value.replace("[", "").replace("]", "").trim();
                     if (!value.isEmpty()) {
@@ -65,7 +91,8 @@ public class ShapeParser {
             }
         }
 
-        // Neues Shape-Objekt mit allen Eigenschaften erstellen
+        // Neues Shape-Objekt erstellen
         return new Shape(shapeType, color, fillColor, posX, posY, lineWidth, scaleX, scaleY, rotation, tags);
     }
+
 }
