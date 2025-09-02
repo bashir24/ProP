@@ -81,13 +81,24 @@ public class ShapeParser {
                     rotation = Integer.parseInt(value);
                     break;
 
-                // Tags: in beiden Formaten gleich
                 case "tags":
-                    value = value.replace("[", "").replace("]", "").trim();
-                    if (!value.isEmpty()) {
-                        tags = new ArrayList<>(Arrays.asList(value.split("\\s*,\\s*")));
+                    // Finde den Start und das Ende der Liste
+                    int start = json.indexOf("[");
+                    int end = json.indexOf("]", start);
+                    if (start >= 0 && end > start) {
+                        String tagList = json.substring(start + 1, end);
+                        tagList = tagList.replace("\"", "").trim();
+                        if (!tagList.isEmpty()) {
+                            tags = new ArrayList<>();
+                            for (String tag : tagList.split(",")) {
+                                tags.add(tag.trim());
+                            }
+                        }
                     }
                     break;
+
+
+
             }
         }
 
