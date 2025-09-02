@@ -1,0 +1,2 @@
+Shape{type=CIRCLE, color='purple', posX=-10, posY=0, tags=[purple]}
+Shape{type=TRIANGLE, color='black', posX=0, posY=-1000, tags=[black]}

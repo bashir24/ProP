@@ -39,8 +39,12 @@ public class Shape {
     public String toString() {
         return "Shape{" +
                 "type=" + shapeType +
+                ", color='" + color + '\'' +
+                ", posX=" + posX +
+                ", posY=" + posY +
                 ", tags=" + tags +
                 '}';
     }
+
 
 }
