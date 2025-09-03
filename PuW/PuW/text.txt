@@ -1,0 +1,21 @@
+
+**Jackson**
+
+* schnell, leistungsstark
+* viele Features (Streaming, Tree, Binding)
+* Standard in Spring
+- komplexer, höhere Lernkurve
+
+**Gson**
+* einfach, leichtgewichtig
+* wenig Konfigurationsaufwand
+
+- langsamer bei großen Daten
+- weniger Features, weniger aktiv gepflegt
+
+**Wahl:** → **Jackson** (Enterprise, große Projekte)
+**Gson** nur für kleine, einfache Anwendungen
+
+---
+
+Willst du, dass ich dir daraus eine **1-Zeilen-Merksatz-Version** bastle, die du dir leichter einprägen kannst?
