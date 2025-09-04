@@ -88,41 +88,31 @@ public class Level {
             if (p.box.intersect(t.box)) {
                 Vec2 overlap = p.box.overlapSize(t.box);
 
-                // Richtung bestimmen:
                 if (overlap.x < overlap.y) {
-                    // Seitliche Kollision
+                    // seitliche Kollision
                     if (p.box.min.x < t.box.min.x) {
-                        System.out.println("Kollision von rechts gegen Tile (Tile ist rechts)");
-                        // Position korrigieren: Spieler links vom Tile setzen
+                        System.out.println("Kollision von links");
                         p.pos.x = t.box.min.x - p.width;
                     } else {
-                        System.out.println("Kollision von links gegen Tile (Tile ist links)");
+                        System.out.println("Kollision von rechts");
                         p.pos.x = t.box.max.x;
                     }
                 } else {
-                    // Vertikale Kollision
+                    // vertikale Kollision
                     if (p.box.min.y < t.box.min.y) {
-                        System.out.println("Kollision von unten gegen Tile (Tile ist unten)");
+                        System.out.println("Kollision von oben");
                         p.pos.y = t.box.min.y - p.height;
                     } else {
-                        System.out.println("Kollision von oben gegen Tile (Tile ist oben)");
+                        System.out.println("Kollision von unten");
                         p.pos.y = t.box.max.y;
                     }
                 }
 
-                // BoundingBox neu setzen nach Korrektur:
-                p.box.min.x = p.pos.x;
-                p.box.min.y = p.pos.y;
-                p.box.max.x = p.pos.x + p.width;
-                p.box.max.y = p.pos.y + p.height;
-
+                p.updateBoundingBox();
                 break;
             }
         }
     }
-
-
-
 
 
     public Image getResultingImage() {
