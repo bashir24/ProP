@@ -11,17 +11,26 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Platformer: neue, moderne Version der Plattform-Spiel-Klasse
+ * ==============================
+ * NEU:
+ * 1. BufferStrategy für flüssiges Rendering (verhindert Flackern)
+ * 2. Player-Objekt für Bewegung und Animation
+ * 3. Kamera folgt automatisch dem Spieler
+ * 4. Erweiterte Tastatursteuerung (UP, DOWN, LEFT, RIGHT + ESC)
+ * 5. Sauberes File-Handling und NullPointer-Schutz
+ */
 public class Platformer extends JFrame {
     @Serial
     private static final long serialVersionUID = 5736902251450559962L;
 
-    private Level l = null;
-    private Player player; // Player-Objekt
-    private BufferStrategy bufferStrategy;
+    private Level level;
+    private Player player;               // NEU: Spieler-Objekt für Bewegung/Animation
+    private BufferStrategy bufferStrategy; // NEU: BufferStrategy für flüssiges Zeichnen
 
     public Platformer() {
-
-        // Fenster schließen
+        // Fenster schließen beim Klick auf "X"
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -45,80 +54,110 @@ public class Platformer extends JFrame {
         System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 
         try {
-            // Level und Player erst **nach der Dateiauswahl** initialisieren
-            l = new Level(selectedFile.getAbsolutePath());
-            player = new Player(100, 100);
+            // NEU: Level und Player erst nach Dateiauswahl initialisieren
+            level = new Level(selectedFile.getAbsolutePath());
+            player = new Player(100, 100); // Startposition des Spielers
 
-            // Fenstergröße
-            this.setBounds(0, 0, 1000, 5 * 70);
+            // Fenstergröße und Sichtbarkeit
+            this.setBounds(100, 100, 1000, 5 * 70);
             this.setVisible(true);
 
-            // BufferStrategy initialisieren
+            // NEU: BufferStrategy initialisieren für flüssiges Zeichnen
             createBufferStrategy(2);
             bufferStrategy = this.getBufferStrategy();
 
-            // Tastatursteuerung hinzufügen
-            addKeyListener(new AL(this));
+            // NEU: Tastatursteuerung hinzufügen
+            addKeyListener(new KeyHandler(this));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * NEU: Aktualisiert Level und Spieler, anschließend wird neu gezeichnet
+     */
     private void updateGameStateAndRepaint() {
-        l.update();
-        repaint();
+        level.update(); // Level-Logik aktualisieren
+        repaint();      // Neu zeichnen
     }
 
+    /**
+     * NEU: Überschreibt paint, um BufferStrategy zu nutzen
+     * Flackerfreies Zeichnen von Level + Spieler
+     */
     @Override
     public void paint(Graphics g) {
         if (bufferStrategy == null) return; // Schutz vor NullPointer
         Graphics2D g2 = null;
         try {
             g2 = (Graphics2D) bufferStrategy.getDrawGraphics();
-            draw(g2);
+            draw(g2); // NEU: Methode zum Zeichnen von Level und Player
         } finally {
             if (g2 != null) g2.dispose();
         }
-        bufferStrategy.show();
+        bufferStrategy.show(); // Zeigt den Puffer an (flüssiges Rendering)
     }
 
-    // Zeichnet Level und Player
+    /**
+     * NEU: Zeichnet das Level und den Spieler
+     * - Kamera folgt dem Spieler
+     * - Level wird als Subimage gezeichnet
+     * - Spieler relativ zur Kamera gezeichnet
+     */
     private void draw(Graphics2D g2) {
-        BufferedImage level = (BufferedImage) l.getResultingImage();
-        // Kamera auf Player positionieren, bleibt im Levelbereich
-        l.offsetX = Math.max(0, Math.min(player.pos.x - 500, level.getWidth() - 1000));
-        if (l.offsetX > level.getWidth() - 1000) l.offsetX = level.getWidth() - 1000;
-        if (l.offsetX < 0) l.offsetX = 0;
+        BufferedImage levelImage = (BufferedImage) level.getResultingImage();
 
-        BufferedImage bi = level.getSubimage((int) l.offsetX, 0, 1000, level.getHeight());
-        g2.drawImage(bi, 0, 0, this);
+        // Kamera-Offset auf Spieler zentrieren
+        level.offsetX = Math.max(0, Math.min(player.pos.x - 500, levelImage.getWidth() - 1000));
 
-        // Player relativ zur Kamera zeichnen
-        g2.drawImage(player.getImage(), (int) (player.pos.x - l.offsetX), (int) player.pos.y, this);
+        // Level-Subimage für Kamera-Ansicht
+        BufferedImage subLevel = levelImage.getSubimage((int) level.offsetX, 0, 1000, levelImage.getHeight());
+        g2.drawImage(subLevel, 0, 0, this);
+
+        // Spieler relativ zur Kamera zeichnen
+        g2.drawImage(player.getImage(), (int) (player.pos.x - level.offsetX), (int) player.pos.y, this);
     }
 
-    // Für andere Klassen zugänglich
-    public Player getPlayer() { return player; }
+    /**
+     * NEU: Getter für den Spieler
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-    // Tastatursteuerung für Bewegung und Animation
-    public class AL extends KeyAdapter {
-        Platformer p;
-        public AL(Platformer p) { super(); this.p = p; }
+    /**
+     * NEU: Innerer KeyAdapter für Tastatursteuerung
+     * - Unterstützung: LEFT, RIGHT, UP, DOWN, ESC
+     * - Bewegt Spieler und aktualisiert Animation
+     */
+    private class KeyHandler extends KeyAdapter {
+        Platformer game;
+
+        public KeyHandler(Platformer game) {
+            this.game = game;
+        }
 
         @Override
-        public void keyPressed(KeyEvent event) {
-            int keyCode = event.getKeyCode();
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
             boolean moved = false;
 
-            if (keyCode == KeyEvent.VK_ESCAPE) dispose();
-            if (keyCode == KeyEvent.VK_LEFT)  { player.move(-10, 0);  moved = true; }
-            if (keyCode == KeyEvent.VK_RIGHT) { player.move(10, 0);   moved = true; }
-            if (keyCode == KeyEvent.VK_UP)    { player.move(0, -10);  moved = true; }
-            if (keyCode == KeyEvent.VK_DOWN)  { player.move(0, 10);   moved = true; }
+            if (key == KeyEvent.VK_ESCAPE) dispose(); // Spiel schließen
+            if (key == KeyEvent.VK_LEFT) { player.move(-10, 0); moved = true; }
+            if (key == KeyEvent.VK_RIGHT) { player.move(10, 0); moved = true; }
+            if (key == KeyEvent.VK_UP) { player.move(0, -10); moved = true; }
+            if (key == KeyEvent.VK_DOWN) { player.move(0, 10); moved = true; }
 
-            player.updateAnimation(moved);
-            updateGameStateAndRepaint();
+            player.updateAnimation(moved); // Animation nur aktualisieren, wenn Bewegung
+            updateGameStateAndRepaint();   // Level + Player neu zeichnen
         }
+    }
+
+    /**
+     * Hauptmethode: startet das Spiel
+     */
+    public static void main(String[] args) {
+        new Platformer(); // NEU: Spiel starten
     }
 }
