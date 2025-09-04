@@ -17,8 +17,13 @@ public class Player {
 
         walkFrames = new BufferedImage[4]; // Anzahl der Animationsbilder anpassen
         try {
-            for (int i = 0; i < walkFrames.length; i++) {
-                walkFrames[i] = ImageIO.read(new File("./assets/Player/p1_walk/PNG/p1_walk0" + (i+1) + ".png"));
+            walkFrames = new BufferedImage[11]; // NEU: 11 Frames
+            for (int i = 0; i < 11; i++) {
+                // NEU: Pfad angepasst, Zahlen von 01 bis 11
+                String frameNumber = String.format("%02d", i + 1); // 01, 02, ... 11
+                walkFrames[i] = ImageIO.read(new File(
+                        "./assets/Player/p1_walk/PNG/p1_walk" + frameNumber + ".png"
+                ));
             }
         } catch (IOException e) {
             e.printStackTrace();
