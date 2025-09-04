@@ -54,7 +54,7 @@ public class Shape {
         this.color = color;
         this.posX = posX;
         this.posY = posY;
-        this.tags = new ArrayList<String>(tags);
+        this.tags = new ArrayList<>(tags);
         this.fillColor = fillColor;
         this.lineWidth = lineWidth;
         this.scaleX = scaleX;

@@ -1,0 +1,17 @@
+Name,Value
+ExceptionBreakpointAward,0
+LineBreakpointAward,26
+FieldBreakpointAward,0
+MethodBreakpointAward,1
+StepIntoAward,55
+StepOverAward,0
+StepOutAward,2
+ForceStepIntoAward,0
+ForceStepOverAward,0
+ConditionalLineBreakpointAward,0
+ConditionalExceptionBreakpointAward,0
+ConditionalFieldBreakpointAward,0
+ConditionalMethodBreakpointAward,0
+YoudiscoveredtheDebugger!,1
+PausedaRunningProgram,1
+DebuggerKenner,0
