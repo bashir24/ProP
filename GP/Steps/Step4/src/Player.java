@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Player {
     boolean facingLeft = false;
@@ -16,6 +18,17 @@ public class Player {
     Vec2 gravity;
 
     float movementSpeed;
+
+    ///Neu::
+    Vec2 velocity = new  Vec2(0, 0);
+    float jumpImpulse = 11.5f;
+    float airFrictionX = 0.90f;
+    float airFrictionY = 0.999f;
+    boolean jumping = false;
+    boolean walkingLeft = false;
+    boolean walkingRight = false;
+    boolean onGround = false;
+
 
     BoundingBox boundingBox;
     int numberAnimationStates = 0;
@@ -69,6 +82,18 @@ public class Player {
         boundingBox = new BoundingBox(0, 0, tilesWalk.get(0).getWidth(), tilesWalk.get(0).getHeight());
         numberAnimationStates = tilesWalk.size();
 
+        playSound("assets/Sound/soundtrack.wav");
+    }
+
+    public void playSound(String path){
+        File lol = new File(path);
+        try{
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(lol));
+            clip.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void move(int deltaX, int deltaY) {
@@ -89,7 +114,6 @@ public class Player {
         getNextImage();
     }
 
-
     public void updateBoundingBox() {
         // update BoundingBox
         boundingBox.min.x = pos.x;
@@ -100,7 +124,7 @@ public class Player {
     }
 
     public BufferedImage getPlayerImage() {
-        BufferedImage b = getNextImage();
+        BufferedImage b = tilesWalk.get(displayedAnimationState);
         if (facingLeft) {
             AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
             tx.translate(-b.getWidth(null), 0);
@@ -120,6 +144,73 @@ public class Player {
             displayedAnimationState = 0;
         }
         return tilesWalk.get(displayedAnimationState);
+    }
 
+    /// Neu::
+    public void update(){
+        posLastFrame.x =  pos.x;
+        posLastFrame.y = pos.y;
+
+        float targetVX = 0f;
+        if(walkingLeft){
+            targetVX -= movementSpeed;
+            facingLeft = true;
+        }
+        if(walkingRight){
+            targetVX += movementSpeed;
+            facingLeft = false;
+        }
+
+        float accel = 2.0f;
+        if(velocity.x < targetVX){
+            velocity.x = Math.max(targetVX, velocity.x + accel);
+        }else if( velocity.x > targetVX){
+            velocity.x = Math.min(targetVX, velocity.x - accel);
+        }
+
+        if(jumping && onGround){
+            velocity.y = -jumpImpulse;
+            onGround = false;
+            jumping = false;
+        }
+
+        velocity.x *= airFrictionX;
+        velocity.y *= airFrictionY;
+        velocity.y += gravity.y;
+
+        pos.x += velocity.x;
+        pos.y += velocity.y;
+
+        float width = tilesWalk.get(0).getWidth();
+        float height = tilesWalk.get(0).getHeight();
+
+        if(pos.x < 0){
+            pos.x = 0;
+            velocity.x = 0;
+        }
+        float maxX = l.lvlSize.x - width;
+        if(pos.x > maxX){
+            pos.x = maxX;
+            velocity.x = 0;
+        }
+
+        if(pos.y < 0){
+            pos.y = 0;
+            velocity.y = 0;
+        }
+        float maxY = l.lvlSize.y - height;
+        if(pos.y > maxY){
+            pos.y = maxY;
+            velocity.y = 0;
+            onGround = true;
+        }
+
+        updateBoundingBox();
+
+        if(Math.abs(velocity.x) > 0.1f && onGround){
+            getNextImage();
+        }else{
+            displayedAnimationState = 0;
+        }
     }
 }

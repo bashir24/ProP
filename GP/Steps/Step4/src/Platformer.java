@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -23,6 +25,9 @@ public class Platformer extends JFrame {
     private Player p = null;
     private Level l = null;
     BufferStrategy bufferStrategy;
+
+    /// New::
+    private Timer timer;
 
     public Platformer() {
         //exit program when window is closed
@@ -63,6 +68,17 @@ public class Platformer extends JFrame {
             e.printStackTrace();
         }
 
+        /// NEW:::
+        timer = new  Timer("GameLoop", true);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                l.update();
+                p.update();
+                checkCollision();
+                repaint();
+            }
+        }, 0, 10);
     }
 
     private void restart() throws IOException {
@@ -81,6 +97,8 @@ public class Platformer extends JFrame {
 
     private void checkCollision() {
         // Collision
+        boolean grounded = false; ///NEW:::
+
         for (int i = 0; i < l.tiles.size(); i++) {
 
             Tile tile = l.tiles.get(i);
@@ -88,8 +106,8 @@ public class Platformer extends JFrame {
             p.updateBoundingBox();
             Vec2 overlapSize = tile.bb.OverlapSize(p.boundingBox);
 
-			float epsilon = 8.f; // experiment with this value. If too low,the player might get stuck when walking over the
-			                     // ground. If too high, it can cause glitching inside/through walls
+            float epsilon = 8.f; // experiment with this value. If too low,the player might get stuck when walking over the
+            // ground. If too high, it can cause glitching inside/through walls
 
             if (overlapSize.x >= 0 && overlapSize.y >= 0 && Math.abs(overlapSize.x + overlapSize.y) >= epsilon) {
 
@@ -97,20 +115,33 @@ public class Platformer extends JFrame {
 
                     if (p.boundingBox.min.y + p.boundingBox.max.y > tile.bb.min.y + tile.bb.max.y) { // player comes from below
                         System.out.println("collision top");
+                        /// NEW::
+                        p.pos.y += Math.abs(overlapSize.y);
+                        p.velocity.y = 0;
                     } else { // player comes from above
                         System.out.println("collision down");
+                        /// NEW::
+                        p.pos.y -= Math.abs(overlapSize.y);
+                        p.velocity.y = 0;
+                        grounded = true;
                     }
                 } else { // X overlap correction
                     if (p.boundingBox.min.x + p.boundingBox.max.x > tile.bb.min.x + tile.bb.max.x) { // player comes from right
                         System.out.println("collision left");
+                        /// NEW::
+                        p.pos.x += Math.abs(overlapSize.x);
+                        p.velocity.x = 0;
                     } else { // player comes from left
                         System.out.println("collision right");
+                        p.pos.x -= Math.abs(overlapSize.x);
+                        p.velocity.x = 0;
                     }
                 }
 
                 p.updateBoundingBox();
             }
         }
+        p.onGround = grounded;
     }
 
     @Override
@@ -157,21 +188,22 @@ public class Platformer extends JFrame {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 dispose();
             }
-
+           // new
             if (keyCode == KeyEvent.VK_UP) {
-                player.move(0, -1);
+                player.jumping = true;
+                player.playSound("assets/Sound/jump1.wav");
             }
 
             if (keyCode == KeyEvent.VK_DOWN) {
-                player.move(0, 1);
+                //Ignorieren
             }
 
             if (keyCode == KeyEvent.VK_LEFT) {
-                player.move(-1, 0);
+                player.walkingLeft = true;
             }
 
             if (keyCode == KeyEvent.VK_RIGHT) {
-                player.move(1, 0);
+                player.walkingRight = true;
             }
 
 
@@ -184,6 +216,23 @@ public class Platformer extends JFrame {
                 }
             }
             updateGameStateAndRepaint();
+        }
+
+        /// NEW:::
+        @Override
+        public void keyReleased(KeyEvent event) {
+            int keyCode = event.getKeyCode();
+            Player player = p.getPlayer();
+
+            if(keyCode == KeyEvent.VK_UP){
+                player.jumping = false;
+            }
+            if(keyCode == KeyEvent.VK_LEFT){
+                player.walkingLeft = false;
+            }
+            if(keyCode == KeyEvent.VK_RIGHT){
+                player.walkingRight = false;
+            }
         }
     }
 }
