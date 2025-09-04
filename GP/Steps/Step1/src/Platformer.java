@@ -48,6 +48,8 @@ public class Platformer extends JFrame {
 		}
 
 		try {
+
+			// Statt das Level-Bild direkt zu laden und anzuzeigen, wird jetzt die Level-Klasse verwendet:
 			Level level = new Level(selectedFile);
 			levelImage = level.getLevelImage();
 
@@ -78,6 +80,7 @@ public class Platformer extends JFrame {
 		if (levelImage == null) return;
 		Graphics2D g2d = (Graphics2D) g;
 
+		//Zeichnet nur einen Ausschnitt des Level-Bildes (Viewport) anstelle des gesamten Bildes:
 		g2d.drawImage(levelImage,
 				8, 31, viewWidth + 8, viewHeight + 31,   // Zielbereich
 				viewX, viewY, viewX + viewWidth, viewY + viewHeight, // Quellbereich
