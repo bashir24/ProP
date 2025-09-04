@@ -19,6 +19,11 @@ public class Player {
     int displayedAnimationState = 0;
     int moveCounter = 0;
 
+    public BoundingBox box;
+
+    public int width = 70;
+    public int height = 70;
+
 
     // Tiles for movement animation
     protected ArrayList<BufferedImage> tilesWalk;
@@ -26,11 +31,16 @@ public class Player {
     Level l;
 
     Player(Level l) {
+
+
         this.pos = new Vec2(0, 0);
         this.posLastFrame = new Vec2(0, 0);
         this.movementSpeed = 7.5f;
 
         this.l = l;
+
+        this.box = new BoundingBox(pos.x, pos.y, pos.x + width, pos.y + height);
+
         tilesWalk = new ArrayList<BufferedImage>();
         try {
             // Tiles for movement animation
@@ -62,22 +72,28 @@ public class Player {
             e.printStackTrace();
         }
         numberAnimationStates = tilesWalk.size();
+
     }
 
     public void move(int deltaX, int deltaY) {
+        // Bewegung
         if (deltaX < 0) {
             facingLeft = true;
-            pos.x = pos.x - movementSpeed;
+            pos.x -= movementSpeed;
         } else if (deltaX > 0) {
-            pos.x = pos.x + movementSpeed;
+            pos.x += movementSpeed;
             facingLeft = false;
         }
+        if (deltaY < 0) pos.y -= movementSpeed;
+        else if (deltaY > 0) pos.y += movementSpeed;
 
-        if (deltaY < 0) {
-            pos.y = pos.y - movementSpeed;
-        } else if (deltaY > 0) {
-            pos.y = pos.y + movementSpeed;
-        }
+        // BoundingBox aktualisieren
+        box.min.x = pos.x;
+        box.min.y = pos.y;
+        box.max.x = pos.x + width;
+        box.max.y = pos.y + height;
+
+
 
         getNextImage();
     }
